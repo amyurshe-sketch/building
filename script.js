@@ -145,6 +145,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 5000);
     }
 
+    // Функция отправки в Telegram
+    async function sendToTelegram(formData) {
+        const response = await fetch('/api/telegram', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
+    }
+
     // Плавная прокрутка для якорных ссылок
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
