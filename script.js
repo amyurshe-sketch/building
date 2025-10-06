@@ -116,10 +116,19 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = true;
 
         try {
+            // Получаем мета-данные страницы
+            const pageMetadata = getPageMetadata();
+            
             await sendToTelegram({
                 name,
                 phone,
-                message
+                message,
+                website: pageMetadata.website,
+                title: pageMetadata.title,
+                description: pageMetadata.description,
+                url: pageMetadata.url,
+                language: currentLang,
+                timestamp: new Date().toLocaleString('ru-RU')
             });
             form.reset();
             showMessage(currentLang === 'ru' ? 'Спасибо! Ваша заявка отправлена.' : 'Thank you! Your request has been sent.', 'success');
@@ -132,6 +141,22 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.disabled = false;
         }
     });
+
+    // Функция для получения мета-данных страницы
+    function getPageMetadata() {
+        const title = document.title || 'GreenBuild — Загородное строительство и ландшафт';
+        const description = document.querySelector('meta[name="description"]')?.content || 
+                           'Превращаем ваши идеи в успешные веб-проекты. Индивидуальный подход, прозрачные сроки и гарантия качества.';
+        const url = window.location.href;
+        const website = 'GreenBuild';
+
+        return {
+            title,
+            description,
+            url,
+            website
+        };
+    }
 
     function showMessage(text, type) {
         formMessage.textContent = text;
