@@ -39,7 +39,7 @@ export default async function handler(req, res) {
       });
     }
 
-    const text = `📌 Новая заявка с сайта:\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n✂️ Услуга: ${service}\n💬 Сообщение: ${message || 'Без дополнительных пожеланий'}\n\n🌐 Источник: Демо-сайт барбершопа`;
+    const text = `📌 Новая заявка с сайта:\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n✂️ Услуга: ${service}\n💬 Сообщение: ${message || 'Без дополнительных пожеланий'}\n\n🌐 Источник: Строительный сайт`;
 
     // Отправляем в Telegram (ИСПОЛЬЗУЕМ ПЕРЕМЕННЫЕ ОКРУЖЕНИЯ)
     const telegramResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
